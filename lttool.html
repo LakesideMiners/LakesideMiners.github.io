@@ -1,18 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+>
 <head>
 </head>
 <body>
   <h2>LittleTroublesCalc</h2>
+  <h4>By Red!</h4>
   
   <div>
-    <h3>Character 1</h3>
+    <h3>You!</h3>
     Confidence: <input type="number" id="conf1"><br>
     Maturity: <input type="number" id="mat1">
   </div>
   
   <div>
-    <h3>Character 2</h3>
+    <h3>Opponent!</h3>
     Confidence: <input type="number" id="conf2"><br>
     Maturity: <input type="number" id="mat2">
   </div>
@@ -39,11 +44,11 @@
       if (!char1BeatsChar2 && !char2BeatsChar1) {
         outcome = "This Fight is a Tie. No regression, timeout, or rewards.";
       } else if (char1BeatsChar2 && !char2BeatsChar1) {
-        outcome = "Character 1 Wins! Character 2 is regressed/sent to Timeout. Character 1 gains Character 2’s reward.";
+        outcome = "You Win!\nYour opponent is regressed/sent to Timeout. \n You gain your opponent's reward.";
       } else if (!char1BeatsChar2 && char2BeatsChar1) {
-        outcome = "Character 2 Wins! Character 1 is regressed/sent to Timeout. Character 2 gains Character 1’s reward.";
+        outcome = "Your Opponent Wins! \nYou are regressed/sent to Timeout.\n Your Opponent gains your reward.";
       } else {
-        outcome = "Both Characters Win and Lose! Both are regressed/sent to Timeout, and each receives the other’s reward.";
+        outcome = "Both of you  Win and Lose! \n Both are regressed/sent to Timeout. \n Each receives the other’s reward.";
       }
       
       // Put the outcome text into the page
