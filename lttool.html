@@ -2,104 +2,123 @@
 <html lang="en">
 <link rel="stylesheet" href="https://unpkg.com/chota@latest">
 <head>
+  <meta charset="UTF-8">
+  <title>Little Troubles Fight Calculator</title>
 </head>
 <body>
-  <h3>Little Troubles Fight Cacluator</h3>
+  <h3>Little Troubles Fight Calculator</h3>
   <h2>You</h2>
-  <label>Confidence(RED)</label>
+  <label>Confidence (RED)</label>
   <input type="number" id="conf1">
 
-  <label>Maturity(BLUE)</label>
+  <label>Maturity (BLUE)</label>
   <input type="number" id="mat1">
 
   <h2>Opponent!</h2>
-  <label>Confidence(RED)</label>
+  <label>Confidence (RED)</label>
   <input type="number" id="conf2">
-  <label>Maturity(BLUE)</label>
+  <label>Maturity (BLUE)</label>
   <input type="number" id="mat2">
   <button onclick="compareFight()">Compare Fight</button>
   <button onclick="reset()">Reset</button>
 
   <div id="result"></div>
-  
 
   <h2>Cookies</h2>
-  <button onclick="cookiesCounterMinusFive()">-5</button><button onclick="cookiesCounterMinusOne()">-1</button><input type="number" id="Cookies" value="0"><button onclick="cookiesCounterPlusOne()">+1</button><button onclick="cookiesCounterPlusFive()">+5</button>
+  <button onclick="cookiesCounterMinusFive()">-5</button>
+  <button onclick="cookiesCounterMinusOne()">-1</button>
+  <input type="number" id="Cookies" value="0">
+  <button onclick="cookiesCounterPlusOne()">+1</button>
+  <button onclick="cookiesCounterPlusFive()">+5</button>
 
   <h2>Fights</h2>
-  <button onclick="fightsMinusOne()">-1</button><input type="number" id="Fights" value="0"><button onclick="fightsPlusOne()">+1</button>
-
-
+  <button onclick="fightsMinusOne()">-1</button>
+  <input type="number" id="Fights" value="0">
+  <button onclick="fightsPlusOne()">+1</button>
 
 <script>
-  function compareFight() {
-      // Grab numbers from the input boxes, defaulting to 0 if blank
-      const conf1 = parseInt(document.getElementById("conf1").value) || 0;
-      const mat1  = parseInt(document.getElementById("mat1").value)  || 0;
-      const conf2 = parseInt(document.getElementById("conf2").value) || 0;
-      const mat2  = parseInt(document.getElementById("mat2").value)  || 0;
-      
-      // Check if each character's confidence beats or equals the other's maturity
-      const char1BeatsChar2 = conf1 >= mat2;
-      const char2BeatsChar1 = conf2 >= mat1;
-      
-      let outcome = "";
-      
-      // Apply the game rules
-      if (!char1BeatsChar2 && !char2BeatsChar1) {
-        outcome = "1. This Fight is a Tie. No regression, timeout, or rewards.";
-      } else if (char1BeatsChar2 && !char2BeatsChar1) {
-        outcome = "1. You Win!\n2. Your opponent is regressed/sent to Timeout. \n 3. You gain your opponent's reward.";
-      } else if (!char1BeatsChar2 && char2BeatsChar1) {
-        outcome = "1. Your Opponent Wins! \n2. You are regressed/sent to Timeout.\n 3. Your Opponent gains your reward.";
-      } else {
-        outcome = "1. Both of you  Win and Lose! \n 2.Both are regressed/sent to Timeout. \n 3.Each receives the other’s reward.";
-      }
-      
-      // Put the outcome text into the page
-      document.getElementById("result").innerText = outcome;
-  }
-  function cookiesCounterPlusOne() {
-      const input = document.getElementById('Cookies');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue + 1;
-  }
-  function cookiesCounterMinusOne() {
-      const input = document.getElementById('Cookies');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue - 1;
-  }
-  function cookiesCounterPlusFive() {
-      const input = document.getElementById('Cookies');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue + 5;
-  }
-  function cookiesCounterMinusFive() {
-      const input = document.getElementById('Cookies');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue - 5;
+  // --- Cookie Helpers ---
+  function setCookie(name, value, days = 365) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days*24*60*60*1000));
+    const expires = "expires=" + date.toUTCString();
+    document.cookie = `${name}=${value}; ${expires}; path=/`;
   }
 
-  function fightsMinusOne(){
-      const input = document.getElementById('Fights');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue - 1;
+  function getCookie(name) {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookies = decodedCookie.split(';');
+    name = name + "=";
+    for (let c of cookies) {
+      while (c.charAt(0) === ' ') c = c.substring(1);
+      if (c.indexOf(name) === 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return null;
   }
-    function fightsPlusOne(){
-      const input = document.getElementById('Fights');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue + 1;
+
+  // --- Load saved values on startup ---
+  window.onload = function() {
+    const cookiesVal = parseInt(getCookie("Cookies")) || 0;
+    const fightsVal = parseInt(getCookie("Fights")) || 0;
+    document.getElementById("Cookies").value = cookiesVal;
+    document.getElementById("Fights").value = fightsVal;
+  };
+
+  // --- Fight Comparison ---
+  function compareFight() {
+    const conf1 = parseInt(document.getElementById("conf1").value) || 0;
+    const mat1  = parseInt(document.getElementById("mat1").value)  || 0;
+    const conf2 = parseInt(document.getElementById("conf2").value) || 0;
+    const mat2  = parseInt(document.getElementById("mat2").value)  || 0;
+
+    const char1BeatsChar2 = conf1 >= mat2;
+    const char2BeatsChar1 = conf2 >= mat1;
+
+    let outcome = "";
+    if (!char1BeatsChar2 && !char2BeatsChar1) {
+      outcome = "1. This Fight is a Tie. No regression, timeout, or rewards.";
+    } else if (char1BeatsChar2 && !char2BeatsChar1) {
+      outcome = "1. You Win!\n2. Your opponent is regressed/sent to Timeout.\n3. You gain your opponent's reward.";
+    } else if (!char1BeatsChar2 && char2BeatsChar1) {
+      outcome = "1. Your Opponent Wins!\n2. You are regressed/sent to Timeout.\n3. Your Opponent gains your reward.";
+    } else {
+      outcome = "1. Both of you Win and Lose!\n2. Both are regressed/sent to Timeout.\n3. Each receives the other’s reward.";
+    }
+    document.getElementById("result").innerText = outcome;
   }
+
+  // --- Cookies Counter ---
+  function updateCookies(valueChange) {
+    const input = document.getElementById('Cookies');
+    let currentValue = parseInt(input.value) || 0;
+    input.value = currentValue + valueChange;
+    setCookie("Cookies", input.value);
+  }
+
+  function cookiesCounterPlusOne() { updateCookies(1); }
+  function cookiesCounterMinusOne() { updateCookies(-1); }
+  function cookiesCounterPlusFive() { updateCookies(5); }
+  function cookiesCounterMinusFive() { updateCookies(-5); }
+
+  // --- Fights Counter ---
+  function updateFights(valueChange) {
+    const input = document.getElementById('Fights');
+    let currentValue = parseInt(input.value) || 0;
+    input.value = currentValue + valueChange;
+    setCookie("Fights", input.value);
+  }
+
+  function fightsPlusOne() { updateFights(1); }
+  function fightsMinusOne() { updateFights(-1); }
+
+  // --- Reset Button ---
   function reset(){
-    const conf1v = document.getElementById('conf1');
-    const conf2v = document.getElementById('conf2');
-    const mat1v = document.getElementById('mat1');
-    const mat2v = document.getElementById('mat2');
-    conf1v.value = 0
-    conf2v.value = 0
-    mat1v.value = 0
-    mat2v.value = 0
+    ['conf1','mat1','conf2','mat2'].forEach(id => {
+      document.getElementById(id).value = 0;
+    });
   }
 </script>
 </body>
-</html>
+</html
