@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" href="https://unpkg.com/chota@latest">
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+>
+
 <head>
 </head>
 <body>
-  <h3>Little Troubles Fight Cacluator</h3>
-  <h2>You</h2>
+  <h2>Little Troubles Fight Cacluator</h2>
+  <h4>By Red!</h4>
+  
+
+
+  <p><strong>You!</strong></p>
   <label>Confidence(RED)</label>
   <input type="number" id="conf1">
-
   <label>Maturity(BLUE)</label>
   <input type="number" id="mat1">
 
-  <h2>Opponent!</h2>
+  <p><strong>Opponent!</strong></p>
   <label>Confidence(RED)</label>
   <input type="number" id="conf2">
   <label>Maturity(BLUE)</label>
   <input type="number" id="mat2">
+
+
   <button onclick="compareFight()">Compare Fight</button>
   <button onclick="reset()">Reset</button>
 
   <div id="result"></div>
   
-
-  <h2>Cookies</h2>
-  <button onclick="cookiesCounterMinusFive()">-5</button><button onclick="cookiesCounterMinusOne()">-1</button><input type="number" id="Cookies" value="0"><button onclick="cookiesCounterPlusOne()">+1</button><button onclick="cookiesCounterPlusFive()">+5</button>
-
-  <h2>Fights</h2>
-  <button onclick="fightsMinusOne()">-1</button><input type="number" id="Fights" value="0"><button onclick="fightsPlusOne()">+1</button>
-
-
-
-<script>
-  function compareFight() {
+  <script>
+    function compareFight() {
       // Grab numbers from the input boxes, defaulting to 0 if blank
       const conf1 = parseInt(document.getElementById("conf1").value) || 0;
       const mat1  = parseInt(document.getElementById("mat1").value)  || 0;
@@ -58,7 +58,11 @@
       
       // Put the outcome text into the page
       document.getElementById("result").innerText = outcome;
-  }
+    }
+  </script>
+  <p><strong>Cookies</strong></p>
+  <button onclick="cookiesCounterMinusFive()" id="incrementBtn">-5</button><button onclick="cookiesCounterMinusOne()" id="incrementBtn">-1</button><input type="number" id="Cookies" value="0"><button onclick="cookiesCounterPlusOne()" id="incrementBtn">+1</button><button onclick="cookiesCounterPlusFive()" id="incrementBtn">+5</button>
+<script>
   function cookiesCounterPlusOne() {
       const input = document.getElementById('Cookies');
       let currentValue = parseInt(input.value);
@@ -78,17 +82,6 @@
       const input = document.getElementById('Cookies');
       let currentValue = parseInt(input.value);
       input.value = currentValue - 5;
-  }
-
-  function fightsMinusOne(){
-      const input = document.getElementById('Fights');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue - 1;
-  }
-    function fightsPlusOne(){
-      const input = document.getElementById('Fights');
-      let currentValue = parseInt(input.value);
-      input.value = currentValue + 1;
   }
   function reset(){
     const conf1v = document.getElementById('conf1');
