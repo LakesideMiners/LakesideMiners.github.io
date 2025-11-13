@@ -3,56 +3,20 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 
 <!-- CSS Reset -->
-<link rel="stylesheet" href="./css/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 
 <!-- Milligram CSS -->
-<link rel="stylesheet" href="./css/mill.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
 <head>
   <meta charset="UTF-8">
   <title>Little Troubles Fight Calculator</title>
+
+  <!-- compact controls -->
   <style>
-    /* Keep cookie/fight controls compact and adjacent to their value fields */
-    .row.controls {
-      display: flex;
-      flex-direction: row; /* force row so buttons sit next to the input on small screens too */
-      align-items: center;
-      justify-content: center; /* center the whole control group horizontally */
-      gap: 0.4rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.6rem;
-      width: 100%;
-    }
-
-    .row.controls .column {
-      flex: 0 0 auto;
-      width: auto;
-      padding: 0 .25rem;
-      display: flex;
-      align-items: center; /* vertically center button + input content */
-      justify-content: center;
-      gap: 0.25rem;
-    }
-
-    .row.controls .column input[type="number"] {
-      width: 6.0rem;
-      text-align: center; /* center the numeric value inside the field */
-    }
-
-    /* center the Cookies / Fights headings above their controls */
-    .controls-heading {
-      text-align: center;
-      width: 100%;
-      margin: 0.6rem 0 0.3rem;
-      font-weight: 700;
-    }
-
-    /* ensure control rows remain centered on very small screens */
-    @media (max-width: 40rem) {
-      .row.controls {
-        justify-content: center;
-      }
-    }
+    .inline-controls { display: inline-flex; gap: 6px; align-items: center; }
+    .inline-controls button { padding: 6px 8px; }
+    .inline-controls input { width: 72px; text-align: center; }
   </style>
 </head>
 
@@ -99,19 +63,27 @@
       <div class="column"><button onclick="reset()">Reset</button></div>
     </div>
     <h1 id="result"></h1>
-    <h4 class="controls-heading">Cookies</h4>
-    <div class="row controls">
-      <div class="column"><button onclick="cookies.stepDown(5)">-5</button></div>
-      <div class="column"><button onclick="cookies.stepDown()">-1</button></div>
-      <div class="column"><input type="number" id="cookies" value="0"></div>
-      <div class="column"><button onclick="cookies.stepUp()">+1</button></div>
-      <div class="column"><button onclick="cookies.stepUp(5)">+5</button></div>
+    <h4>Cookies</h4>
+    <div class="row">
+      <div class="column">
+        <div class="inline-controls">
+          <button onclick="cookies.stepDown(5)">-5</button>
+          <button onclick="cookies.stepDown()">-1</button>
+          <input type="number" id="cookies" value="0">
+          <button onclick="cookies.stepUp()">+1</button>
+          <button onclick="cookies.stepUp(5)">+5</button>
+        </div>
+      </div>
     </div>
-    <h4 class="controls-heading">Fights</h4>
-    <div class="row controls">
-      <div class="column"><button onclick="fights.stepDown()">-1</button></div>
-      <div class="column"><input type="number" id="fights" value="0"></div>
-      <div class="column"><button onclick="fights.stepUp()">+1</button></div>
+    <h4>Fights</h4>
+    <div class="row">
+      <div class="column">
+        <div class="inline-controls">
+          <button onclick="fights.stepDown()">-1</button>
+          <input type="number" id="fights" value="0">
+          <button onclick="fights.stepUp()">+1</button>
+        </div>
+      </div>
     </div>
   </div>
 
