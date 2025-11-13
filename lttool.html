@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="./css/mill.css">
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
   <title>Little Troubles Fight Calculator</title>
   <style>
@@ -47,6 +48,20 @@
       font-weight: 700;
     }
 
+    /* Result text: responsive, preserve line breaks, and always fit width */
+    #result {
+      white-space: pre-wrap;            /* keep newlines from JS */
+      word-break: break-word;
+      overflow-wrap: break-word;
+      text-align: center;
+      box-sizing: border-box;
+      padding: 0 1rem;                  /* prevent touching the edges on small screens */
+      line-height: 1.35;
+      margin: 0.6rem 0;
+      /* Responsive font size: scales with viewport but stays within min/max bounds */
+      font-size: clamp(1.0rem, 2.2vw + 0.5rem, 2.0rem);
+    }
+
     /* ensure control rows remain centered on very small screens */
     @media (max-width: 40rem) {
       .row.controls {
@@ -63,7 +78,7 @@
       <h3>Little Troubles Fight Calculator by Red!</h3>
     </div>
     <div class="row">
-      <small>This Site Uses Cookies to store your Cookie and Fight Count <a href="https://github.com/LakesideMiners/LakesideMiners.github.io/blob/master/lttool.html"> and this is open source!</a></small>
+      <small>This Site<a href="https://github.com/LakesideMiners/LakesideMiners.github.io/blob/master/lttool.html"> is Open Source!</a></small>
     </div>
     <!--Calc Inputs/Controls-->
     <!--You-->
@@ -138,6 +153,15 @@
       }
       document.getElementById("result").innerText = outcome;
     }
-
+    function resetFightThing() {
+      var mat1V = document.getElementById('mat1');
+      var mat2V = document.getElementById('mat2');
+      var conf1V = document.getElementById('conf1');
+      var conf2V = document.getElementById('conf2');
+      mat1V.value = null;
+      mat2V.value = null;
+      conf1V.value = null;
+      conf2V.value = null;
+    }
   </script>
 </body>
