@@ -8,6 +8,7 @@
 <!-- Milligram CSS -->
 <link rel="stylesheet" href="./css/mill.css">
 
+<script src=" https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js "></script>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="UTF-8">
@@ -78,7 +79,7 @@
       <h3>Little Troubles Fight Calculator by Red!</h3>
     </div>
     <div class="row">
-      <small>This Site<a href="https://github.com/LakesideMiners/LakesideMiners.github.io/blob/master/lttool.html"> is Open Source!</a></small>
+      <small>This Site Uses cookies ONLY to store the fight count and cookie count! They expire after 7 days!<a href="https://github.com/LakesideMiners/LakesideMiners.github.io/blob/master/lttool.html"> Source Code!</a></small>
     </div>
     <!--Calc Inputs/Controls-->
     <!--You-->
@@ -116,22 +117,38 @@
     <h1 id="result"></h1>
     <h4 class="controls-heading">Cookies</h4>
     <div class="row controls">
-      <div class="column"><button onclick="cookies.stepDown(5)">-5</button></div>
-      <div class="column"><button onclick="cookies.stepDown()">-1</button></div>
+      <div class="column"><button onclick="adjustCookieValue(-5)">-5</button></div>
+      <div class="column"><button onclick="adjustCookieValue(-1)">-1</button></div>
       <div class="column"><input type="number" id="cookies" value="0"></div>
-      <div class="column"><button onclick="cookies.stepUp()">+1</button></div>
-      <div class="column"><button onclick="cookies.stepUp(5)">+5</button></div>
+      <div class="column"><button onclick="adjustCookieValue(1)">+1</button></div>
+      <div class="column"><button onclick="adjustCookieValue(5)">+5</button></div>
     </div>
     <h4 class="controls-heading">Fights</h4>
     <div class="row controls">
-      <div class="column"><button onclick="fights.stepDown()">-1</button></div>
+      <div class="column"><button onclick="adjustFightValue(-1)">-1</button></div>
       <div class="column"><input type="number" id="fights" value="0"></div>
-      <div class="column"><button onclick="fights.stepUp()">+1</button></div>
+      <div class="column"><button onclick="adjustFightValue(1)">+1</button></div>
     </div>
   </div>
 
 <script>
-    // --- Fight Comparison ---
+    function adjustCookieValue(value){
+      cookies.stepUp(value);
+      Cookies.set('cookieSave', parseInt(document.getElementById("cookies").value), { expires: 7 });
+    }
+    function adjustFightValue(value){
+      fights.stepUp(value);
+      Cookies.set('fightSave', parseInt(document.getElementById("fights").value), { expires: 7 });
+    }
+    function loadCookies(){
+      console.log("What")
+      let fightCookie = Cookies.get('fightSave'); // => 'value'
+      console.log(fightCookie);
+      let cookieCookie = Cookies.get('cookieSave'); // => 'value'
+      console.log(cookieCookie);
+      console.log("OWO");
+
+    }
     function compareFight() {
       const conf1 = parseInt(document.getElementById("conf1").value) || 0;
       const mat1 = parseInt(document.getElementById("mat1").value) || 0;
@@ -165,5 +182,8 @@
       conf2V.value = null;
       resultV.value = null;
     }
+    document.addEventListener('DOMContentLoaded', function() {
+      loadCookies();
+    }, false);
   </script>
 </body>
