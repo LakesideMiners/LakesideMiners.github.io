@@ -177,12 +177,11 @@
       var mat2V = document.getElementById('mat2');
       var conf1V = document.getElementById('conf1');
       var conf2V = document.getElementById('conf2');
-      var resultV = document.getElementById('result');
       mat1V.value = null;
       mat2V.value = null;
       conf1V.value = null;
       conf2V.value = null;
-      resultV.value = " ";
+      document.getElementById("result").innerText = " ";
     }
     document.addEventListener('DOMContentLoaded', function() {
       loadCookies();
